@@ -14,7 +14,14 @@ const server = Fastify({
 })
 
 server.get('/todos', async () => {
-  const request = await fetch('http://127.0.0.1:3000/api/todos')
+  const request = await fetch(
+    'http://127.0.0.1:3000/api/todos',
+    {},
+    {
+      useCache: true,
+      ttl: 1,
+    },
+  )
 
   if (!request.ok) {
     throw new Error('Network response was not ok')

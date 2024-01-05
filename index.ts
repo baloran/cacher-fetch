@@ -8,7 +8,7 @@ function buildKey(
   resource: string | URL | globalThis.Request,
   config?: RequestInit,
 ) {
-  const { method, headers } = config ?? {
+  const { method = 'GET', headers = {} } = config ?? {
     method: 'GET',
     headers: {},
   }
@@ -20,6 +20,7 @@ function buildKey(
 
 interface Options {
   useCache?: boolean
+  ttl?: number
 }
 
 interface ExtendedResponse extends Response {
@@ -31,26 +32,24 @@ declare global {
   function fetch(
     resource: string,
     init?: RequestInit,
-    options?: {
-      useCache: false
-    },
+    options?: Options,
   ): Promise<Response>
 
   function fetch(
     resource: string | URL | globalThis.Request,
     config?: RequestInit,
-    options?: {
-      useCache: true
-    },
+    options?: Options,
   ): Promise<ExtendedResponse>
 }
 
 global.fetch = async (
   resource: string | URL | globalThis.Request,
   config?: RequestInit,
-  options: Options = { useCache: true },
+  options?: Options,
 ) => {
-  if (!options.useCache) {
+  const { useCache = true, ttl = 60 * 60 * 24 } = options ?? {}
+
+  if (!useCache) {
     return originalFetch(resource, config)
   }
 
@@ -78,13 +77,13 @@ global.fetch = async (
 
     response.json = async () => {
       const json = await originalJson.call(response)
-      redis.set(key, JSON.stringify(json))
+      redis.set(key, JSON.stringify(json), 'EX', ttl)
       return json
     }
 
     response.text = async () => {
       const text = await originalText.call(response)
-      redis.set(key, text)
+      redis.set(key, text, 'EX', ttl)
       return text
     }
   }
