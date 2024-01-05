@@ -1,0 +1,25 @@
+{
+  "name": "@baloran/fetch-cacher",
+  "version": "0.0.1",
+  "description": "Simple fetch cacher with redis",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "generate:types": "tsc",
+    "build": "npm run generate:types && esbuild src/index.ts --bundle --outfile=dist/index.js --minify --external:ioredis",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Arnaud “Baloran” Allouis <arnaud.allouis@baloran.fr>",
+  "license": "MIT",
+  "devDependencies": {
+    "@tsconfig/recommended": "^1.0.3",
+    "@types/node": "^20.10.6",
+    "esbuild": "^0.19.11",
+    "tsx": "^4.7.0",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "ioredis": "^5.3.2"
+  }
+}

@@ -18,12 +18,12 @@ function buildKey(
   return key
 }
 
-interface Options {
+export interface Options {
   useCache?: boolean
   ttl?: number
 }
 
-interface ExtendedResponse extends Response {
+export interface ExtendedResponse extends Response {
   useCache: boolean
 }
 

@@ -1,0 +1,17 @@
+{
+  "name": "fastify-simple-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@baloran/fetch-cacher": "*",
+    "fastify": "^4.25.2",
+    "pino-pretty": "^10.3.1"
+  }
+}
