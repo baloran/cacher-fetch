@@ -1,8 +1,6 @@
 const { fetch: originalFetch } = global
 
-import Redis from 'ioredis'
-
-const redis = new Redis()
+import Redis, { type RedisOptions } from 'ioredis'
 
 function buildKey(
   resource: string | URL | globalThis.Request,
@@ -21,6 +19,7 @@ function buildKey(
 export interface Options {
   useCache?: boolean
   ttl?: number
+  redis?: RedisOptions
 }
 
 export interface ExtendedResponse extends Response {
@@ -48,6 +47,8 @@ global.fetch = async (
   options?: Options,
 ) => {
   const { useCache = true, ttl = 60 * 60 * 24 } = options ?? {}
+
+  const redis = new Redis(options?.redis ?? {})
 
   if (!useCache) {
     return originalFetch(resource, config)
