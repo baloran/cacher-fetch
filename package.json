@@ -3,12 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {
-    "dev:client": "tsx client.ts",
-    "dev:server": "tsx server.ts",
-    "test:load": "autocannon -c 100 -d 10 -p 10 http://localhost:1337/todos",
-    "test:load:nocache": "autocannon -c 100 -d 10 -p 10 http://localhost:1337/todoswithoutcache"
-  },
+  "scripts": {},
   "keywords": [],
   "author": "Arnaud “Baloran” Allouis <arnaud.allouis@baloran.fr>",
   "license": "MIT",

@@ -4,7 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "docker:up": "docker-compose up -d",
+    "docker:down": "docker-compose down",
+    "dev:client": "tsx ./src/client.ts",
+    "dev:server": "tsx ./src/server.ts",
+    "start:servers": "npm-run-all -p docker:up dev:client dev:server",
+    "test:load": "autocannon -c 100 -d 10 -p 10 http://localhost:1337/todos",
+    "test:load:nocache": "autocannon -c 100 -d 10 -p 10 http://localhost:1337/todoswithoutcache",
+    "stop:servers": "pkill -f 'pnpm dev:client' && pkill -f 'pnpm dev:server'"
   },
   "keywords": [],
   "author": "",
@@ -13,5 +20,12 @@
     "@baloran/fetch-cacher": "*",
     "fastify": "^4.25.2",
     "pino-pretty": "^10.3.1"
+  },
+  "devDependencies": {
+    "@tsconfig/recommended": "^1.0.3",
+    "autocannon": "^7.14.0",
+    "esbuild": "^0.19.11",
+    "npm-run-all": "^4.1.5",
+    "tsx": "^4.7.0"
   }
 }

@@ -1,16 +1,8 @@
-import './index'
+import '@baloran/fetch-cacher'
 import Fastify from 'fastify'
 
 const server = Fastify({
-  logger: {
-    transport: {
-      target: 'pino-pretty',
-      options: {
-        translateTime: 'HH:MM:ss Z',
-        ignore: 'pid,hostname',
-      },
-    },
-  },
+  logger: false,
 })
 
 server.get('/todos', async () => {
